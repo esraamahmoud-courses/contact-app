@@ -1,8 +1,9 @@
-import 'package:contact_app/core/routes/app_routes.dart';
 import 'package:contact_app/ui/home/home_screen.dart';
 import 'package:flutter/material.dart';
 
-void main (){
+import 'core/routes/app_routes.dart';
+
+void main() {
   runApp(MyApp());
 }
 
@@ -13,9 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      routes: {
-        AppRoutes.home : (context) => HomeScreen(),
-      },
+      routes: {AppRoutes.home: (context) => HomeScreen()},
       initialRoute: AppRoutes.home,
 
       home: HomeScreen(),
