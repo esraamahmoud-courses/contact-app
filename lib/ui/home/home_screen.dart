@@ -1,5 +1,6 @@
 import 'package:contact_app/core/theme/app_colors.dart';
 import 'package:contact_app/core/theme/app_fonts.dart';
+import 'package:contact_app/ui/bottom_sheet/bottom_sheet_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/content/home_content.dart';
@@ -12,28 +13,37 @@ class HomeScreen extends StatelessWidget {
     var size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: AppColors.darkBlue,
+      appBar: AppBar(
+        title: Image.asset(
+          "assets/images/app_logo.png",
+          width: size.width * .3,
+        ),
+        backgroundColor: AppColors.darkBlue,
+        automaticallyImplyLeading: false,
+      ),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.all(16),
-          child: Stack(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset("assets/images/app_logo.png", width: size.width * .3),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset("assets/images/empty_home.png"),
-                  Text(
-                    HomeContent.emptyContent,
-                    style: titleLarge(weight: .w500),
-                  ),
-                ],
-              ),
+              Image.asset("assets/images/empty_home.png"),
+              Text(HomeContent.emptyContent, style: titleLarge(weight: .w500)),
             ],
           ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            isScrollControlled: true,
+            backgroundColor: Colors.transparent,
+            builder: (BuildContext context) {
+              return BottomSheetScreen();
+            },
+          );
+        },
         backgroundColor: AppColors.gold,
         child: Icon(Icons.add, color: AppColors.darkBlue),
       ),
