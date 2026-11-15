@@ -1,5 +1,6 @@
 import 'package:contact_app/core/theme/app_colors.dart';
 import 'package:contact_app/core/theme/app_fonts.dart';
+import 'package:contact_app/ui/bottom_sheet/bottom_sheet_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/content/home_content.dart';
@@ -33,7 +34,16 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            isScrollControlled: true,
+            backgroundColor: Colors.transparent,
+            builder: (BuildContext context) {
+              return BottomSheetScreen();
+            },
+          );
+        },
         backgroundColor: AppColors.gold,
         child: Icon(Icons.add, color: AppColors.darkBlue),
       ),
