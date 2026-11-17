@@ -1,4 +1,5 @@
 import 'package:contact_app/core/routes/app_routes.dart';
+import 'package:contact_app/core/theme/contact_card.dart';
 import 'package:contact_app/ui/bottom_sheet/bottom_sheet_screen.dart';
 import 'package:contact_app/ui/home/home_screen.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
       routes: {
         AppRoutes.home: (context) => HomeScreen(),
         AppRoutes.bottomSheet: (context) => BottomSheetScreen(),
+        AppRoutes.contactCard: (context) => ContactCard(),
       },
       initialRoute: AppRoutes.home,
 

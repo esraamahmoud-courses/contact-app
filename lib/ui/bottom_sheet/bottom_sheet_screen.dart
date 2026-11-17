@@ -1,3 +1,4 @@
+import 'package:contact_app/core/routes/app_routes.dart';
 import 'package:contact_app/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -76,7 +77,12 @@ class _BottomSheetScreenState extends State<BottomSheetScreen> {
           ),
           SizedBox(
             width: double.infinity,
-            child: elevatedButton(data: "Enter user"),
+            child: elevatedButton(
+              data: "Enter user",
+              onTap: () {
+                Navigator.pushNamed(context, AppRoutes.contactCard);
+              },
+            ),
           ),
         ],
       ),
