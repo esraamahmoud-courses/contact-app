@@ -43,91 +43,98 @@ class _BottomSheetScreenState extends State<BottomSheetScreen> {
     var size = MediaQuery.of(context).size;
     return Material(
       color: Colors.transparent,
-      child: Container(
-        padding: EdgeInsets.all(size.height * .02),
-        decoration: BoxDecoration(
-          color: AppColors.darkBlue,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(40),
-            topRight: Radius.circular(40),
-          ),
+      child: Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
         ),
-        child: Form(
-          key: formKey,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            spacing: size.height * .02,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                spacing: 16,
+        child: Container(
+          padding: EdgeInsets.all(size.height * .02),
+          decoration: BoxDecoration(
+            color: AppColors.darkBlue,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(40),
+              topRight: Radius.circular(40),
+            ),
+          ),
+          child: Form(
+            key: formKey,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                spacing: size.height * .02,
                 children: [
-                  Expanded(
-                    flex: 3,
-                    child: OutlinedButton(
-                      style: OutlinedButton.styleFrom(
-                        side: BorderSide(color: AppColors.gold),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(28),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    spacing: 16,
+                    children: [
+                      Expanded(
+                        flex: 3,
+                        child: OutlinedButton(
+                          style: OutlinedButton.styleFrom(
+                            side: BorderSide(color: AppColors.gold),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(28),
+                            ),
+                          ),
+                          onPressed: () {},
+                          child: Image.asset(
+                            "assets/images/image_not_preview.png",
+                            height: size.height * .170,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
-                      onPressed: () {},
-                      child: Image.asset(
-                        "assets/images/image_not_preview.png",
-                        height: size.height * .170,
-                        fit: BoxFit.cover,
+
+                      Expanded(
+                        flex: 4,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            userInfoExample(data: "User Name"),
+                            userInfoExample(data: "example@email.com"),
+                            userInfoExample(data: "+200000000000"),
+                          ],
+                        ),
                       ),
-                    ),
+                    ],
                   ),
+                  Column(
+                    spacing: size.height * .01,
+                    children: [
+                      ContactTextForm(
+                        data: "Enter User Name ",
+                        controller: nameController,
+                        keyboardType: TextInputType.name,
+                      ),
 
-                  Expanded(
-                    flex: 4,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        userInfoExample(data: "User Name"),
-                        userInfoExample(data: "example@email.com"),
-                        userInfoExample(data: "+200000000000"),
-                      ],
+                      ContactTextForm(
+                        data: "Enter User Email ",
+                        controller: emailController,
+                        keyboardType: TextInputType.emailAddress,
+                      ),
+                      ContactTextForm(
+                        data: "Enter User Phone",
+                        controller: phoneController,
+                        keyboardType: TextInputType.phone,
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    width: double.infinity,
+                    child: elevatedButton(
+                      data: "Enter user",
+                      onTap: () {
+                        submitForm();
+                      },
+                      fontColor: AppColors.darkBlue,
+                      size: 20,
                     ),
                   ),
                 ],
               ),
-              Column(
-                spacing: size.height * .01,
-                children: [
-                  ContactTextForm(
-                    data: "Enter User Name ",
-                    controller: nameController,
-                    keyboardType: TextInputType.name,
-                  ),
-
-                  ContactTextForm(
-                    data: "Enter User Email ",
-                    controller: emailController,
-                    keyboardType: TextInputType.emailAddress,
-                  ),
-                  ContactTextForm(
-                    data: "Enter User Phone",
-                    controller: phoneController,
-                    keyboardType: TextInputType.phone,
-                  ),
-                ],
-              ),
-              SizedBox(
-                width: double.infinity,
-                child: elevatedButton(
-                  data: "Enter user",
-                  onTap: () {
-                    submitForm();
-                  },
-                  fontColor: AppColors.darkBlue,
-                  size: 20,
-                ),
-              ),
-            ],
+            ),
           ),
         ),
       ),

@@ -18,7 +18,11 @@ ElevatedButton elevatedButton({
     style: ElevatedButton.styleFrom(
       backgroundColor: color ?? AppColors.gold,
       foregroundColor: AppColors.darkBlue,
-      textStyle: TextStyle(fontSize: size, fontWeight: .normal),
+      textStyle: TextStyle(
+        fontSize: size,
+        fontWeight: fontWeight,
+        color: fontColor,
+      ),
       alignment: Alignment.center,
       overlayColor: Colors.transparent,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
@@ -29,10 +33,7 @@ ElevatedButton elevatedButton({
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         if (icon != null) ...[icon, const SizedBox(width: 8)],
-        Text(
-          data,
-          style: bodySmall(color: fontColor, weight: fontWeight),
-        ),
+        Text(data, style: TextStyle(color: fontColor)),
       ],
     ),
   );
