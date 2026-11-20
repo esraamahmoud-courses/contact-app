@@ -1,3 +1,4 @@
+import 'package:contact_app/core/routes/app_routes.dart';
 import 'package:contact_app/core/theme/app_colors.dart';
 import 'package:contact_app/core/theme/app_fonts.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-
     return Scaffold(
       backgroundColor: AppColors.darkBlue,
       appBar: AppBar(
@@ -34,25 +34,47 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: AppColors.darkBlue,
         automaticallyImplyLeading: false,
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          final newContact = await showModalBottomSheet<Map<String, String>>(
-            context: context,
-            isScrollControlled: true,
-            backgroundColor: Colors.transparent,
-            builder: (BuildContext context) {
-              return BottomSheetScreen();
-            },
-          );
-          if (newContact != null) {
-            setState(() {
-              contacts.add(newContact);
-            });
-          }
-        },
-        backgroundColor: AppColors.gold,
-        child: Icon(Icons.add, color: AppColors.darkBlue),
+
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        spacing: 8,
+        children: [
+          if (contacts.isNotEmpty)
+            FloatingActionButton(
+              heroTag: 'deleteButton',
+              onPressed: () {
+                setState(() {
+                  contacts.removeAt(contacts.length - 1);
+                });
+              },
+              backgroundColor: AppColors.orange,
+              child: Icon(Icons.delete, color: AppColors.gold),
+            ),
+          if (contacts.length < 6)
+            FloatingActionButton(
+              heroTag: 'addButton',
+              onPressed: () async {
+                final newContact =
+                    await showModalBottomSheet<Map<String, String>>(
+                      context: context,
+                      isScrollControlled: true,
+                      backgroundColor: Colors.transparent,
+                      builder: (BuildContext context) {
+                        return BottomSheetScreen();
+                      },
+                    );
+                if (newContact != null) {
+                  setState(() {
+                    contacts.add(newContact);
+                  });
+                }
+              },
+              backgroundColor: AppColors.gold,
+              child: Icon(Icons.add, color: AppColors.darkBlue),
+            ),
+        ],
       ),
+
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),

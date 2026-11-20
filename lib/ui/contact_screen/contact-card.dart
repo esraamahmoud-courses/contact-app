@@ -4,13 +4,15 @@ import 'package:contact_app/core/theme/elevated_button.dart';
 import 'package:flutter/material.dart';
 
 class ContactCard extends StatelessWidget {
-  final Map<String, String> contact;
-  final VoidCallback onDelete;
+  final Map<String, String>? contact;
+  final VoidCallback? onDelete;
 
-  const ContactCard({super.key, required this.contact, required this.onDelete});
+  const ContactCard({super.key, this.contact, this.onDelete});
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+
     return ClipRRect(
       borderRadius: BorderRadius.circular(16),
       child: Container(
@@ -21,16 +23,19 @@ class ContactCard extends StatelessWidget {
           children: [
             Stack(
               children: [
-                Image.asset(
-                  "assets/images/card_image_messi.png",
-                  fit: BoxFit.cover,
-                  width: double.infinity,
+                SizedBox(
+                  height: size.height * .2,
+                  child: Image.asset(
+                    "assets/images/card_image_messi.png",
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                  ),
                 ),
                 Positioned(
                   bottom: 8,
                   left: 7,
                   child: elevatedButton(
-                    data: contact['name'] ?? '',
+                    data: contact?['name'] ?? '',
                     onTap: () {},
                     size: 14,
                     fontColor: AppColors.darkBlue,
@@ -49,7 +54,7 @@ class ContactCard extends StatelessWidget {
                       Icon(Icons.email, color: AppColors.darkBlue),
                       Expanded(
                         child: Text(
-                          contact['email'] ?? '',
+                          contact?['email'] ?? '',
                           overflow: TextOverflow.ellipsis,
                           style: bodySmall(color: AppColors.darkBlue),
                         ),
@@ -62,7 +67,7 @@ class ContactCard extends StatelessWidget {
                       Icon(Icons.phone_in_talk, color: AppColors.darkBlue),
                       Expanded(
                         child: Text(
-                          contact['phone'] ?? '',
+                          contact?['phone'] ?? '',
                           overflow: TextOverflow.ellipsis,
                           style: bodySmall(color: AppColors.darkBlue),
                         ),

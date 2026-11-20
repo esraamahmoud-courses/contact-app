@@ -7,18 +7,35 @@ import '../../core/theme/text_form_field.dart';
 import '../../core/theme/user_info_example.dart';
 
 class BottomSheetScreen extends StatefulWidget {
-  const BottomSheetScreen({super.key});
+  final dynamic contact;
+
+  const BottomSheetScreen({super.key, this.contact});
 
   @override
   State<BottomSheetScreen> createState() => _BottomSheetScreenState();
 }
 
 class _BottomSheetScreenState extends State<BottomSheetScreen> {
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController phoneController = TextEditingController();
-  int index = 1;
+  late GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  late TextEditingController nameController = TextEditingController();
+  late TextEditingController emailController = TextEditingController();
+  late TextEditingController phoneController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    nameController = TextEditingController(text: widget.contact?['name'] ?? '');
+    emailController = TextEditingController(
+      text: widget.contact?['email'] ?? '',
+    );
+    phoneController = TextEditingController(
+      text: widget.contact?['phone'] ?? '',
+    );
+
+    nameController.addListener(() => setState(() {}));
+    emailController.addListener(() => setState(() {}));
+    phoneController.addListener(() => setState(() {}));
+  }
 
   @override
   void dispose() {
@@ -41,6 +58,7 @@ class _BottomSheetScreenState extends State<BottomSheetScreen> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+
     return Material(
       color: Colors.transparent,
       child: Padding(
@@ -79,10 +97,13 @@ class _BottomSheetScreenState extends State<BottomSheetScreen> {
                             ),
                           ),
                           onPressed: () {},
-                          child: Image.asset(
-                            "assets/images/image_not_preview.png",
+                          child: SizedBox(
                             height: size.height * .170,
-                            fit: BoxFit.cover,
+                            child: Image.asset(
+                              "assets/images/image_not_preview.png",
+
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                       ),
@@ -92,9 +113,21 @@ class _BottomSheetScreenState extends State<BottomSheetScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            userInfoExample(data: "User Name"),
-                            userInfoExample(data: "example@email.com"),
-                            userInfoExample(data: "+200000000000"),
+                            userInfoExample(
+                              data: nameController.text.isEmpty
+                                  ? "User Name"
+                                  : nameController.text,
+                            ),
+                            userInfoExample(
+                              data: emailController.text.isEmpty
+                                  ? "example@email.com"
+                                  : emailController.text,
+                            ),
+                            userInfoExample(
+                              data: phoneController.text.isEmpty
+                                  ? "+200000000000"
+                                  : phoneController.text,
+                            ),
                           ],
                         ),
                       ),
