@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:contact_app/core/theme/app_colors.dart';
 import 'package:contact_app/core/theme/app_fonts.dart';
 import 'package:contact_app/core/theme/elevated_button.dart';
@@ -25,11 +27,18 @@ class ContactCard extends StatelessWidget {
               children: [
                 SizedBox(
                   height: size.height * .2,
-                  child: Image.asset(
-                    "assets/images/card_image_messi.png",
-                    fit: BoxFit.cover,
-                    width: double.infinity,
-                  ),
+                  child:
+                      contact?['image'] != null && contact!['image']!.isNotEmpty
+                      ? Image.file(
+                          File(contact!['image']!),
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                        )
+                      : Image.asset(
+                          'assets/images/image_not_preview.png',
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                        ),
                 ),
                 Positioned(
                   bottom: 8,

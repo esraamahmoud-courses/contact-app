@@ -1,12 +1,10 @@
-import 'package:contact_app/core/routes/app_routes.dart';
 import 'package:contact_app/core/theme/app_colors.dart';
 import 'package:contact_app/core/theme/app_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:contact_app/ui/bottom_sheet/bottom_sheet_screen.dart';
 
 import '../../core/content/home_content.dart';
-import '../../core/theme/elevated_button.dart';
-import '../contact_screen/contact-card.dart';
+import '../contact_screen/contact_card.dart';
 
 class HomeScreen extends StatefulWidget {
   final List<Map<String, String>>? contacts;

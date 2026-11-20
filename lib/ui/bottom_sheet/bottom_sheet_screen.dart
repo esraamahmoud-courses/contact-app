@@ -1,6 +1,8 @@
-import 'package:contact_app/core/routes/app_routes.dart';
+import 'dart:io';
+
 import 'package:contact_app/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../core/theme/elevated_button.dart';
 import '../../core/theme/text_form_field.dart';
@@ -21,6 +23,9 @@ class _BottomSheetScreenState extends State<BottomSheetScreen> {
   late TextEditingController emailController = TextEditingController();
   late TextEditingController phoneController = TextEditingController();
 
+  String? _selectedImagePath;
+  final ImagePicker _picker = ImagePicker();
+
   @override
   void initState() {
     super.initState();
@@ -31,6 +36,8 @@ class _BottomSheetScreenState extends State<BottomSheetScreen> {
     phoneController = TextEditingController(
       text: widget.contact?['phone'] ?? '',
     );
+
+    _selectedImagePath = widget.contact?['image'];
 
     nameController.addListener(() => setState(() {}));
     emailController.addListener(() => setState(() {}));
@@ -45,12 +52,26 @@ class _BottomSheetScreenState extends State<BottomSheetScreen> {
     super.dispose();
   }
 
+  Future<void> _pickImage() async {
+    final XFile? pickedFile = await _picker.pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 85,
+    );
+
+    if (pickedFile != null) {
+      setState(() {
+        _selectedImagePath = pickedFile.path;
+      });
+    }
+  }
+
   void submitForm() {
     if (formKey.currentState!.validate()) {
       Navigator.pop(context, {
         'name': nameController.text.trim(),
         'email': emailController.text.trim(),
         'phone': phoneController.text.trim(),
+        'image': _selectedImagePath ?? '',
       });
     }
   }
@@ -96,13 +117,21 @@ class _BottomSheetScreenState extends State<BottomSheetScreen> {
                               borderRadius: BorderRadius.circular(28),
                             ),
                           ),
-                          onPressed: () {},
+                          onPressed: _pickImage,
                           child: SizedBox(
                             height: size.height * .170,
-                            child: Image.asset(
-                              "assets/images/image_not_preview.png",
-
-                              fit: BoxFit.cover,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(24),
+                              child: _selectedImagePath != null
+                                  ? Image.file(
+                                      File(_selectedImagePath!),
+                                      fit: BoxFit.cover,
+                                      width: double.infinity,
+                                    )
+                                  : Image.asset(
+                                      "assets/images/image_not_preview.png",
+                                      fit: BoxFit.cover,
+                                    ),
                             ),
                           ),
                         ),
